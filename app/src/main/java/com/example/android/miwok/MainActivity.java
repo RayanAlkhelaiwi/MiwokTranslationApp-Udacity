@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         TextView phrases = (TextView) findViewById(R.id.phrases);
 
         assert numbers != null;
-        numbers.setOnClickListener (new View.OnClickListener() {
+        numbers.setOnClickListener(new View.OnClickListener() {
             // The code in this method will be executed when the numbers View is clicked on.
             @Override
             public void onClick(View view) {
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        familyMembers.setOnClickListener (new View.OnClickListener() {
+        familyMembers.setOnClickListener(new View.OnClickListener() {
             // The code in this method will be executed when the family members View is clicked on.
             @Override
             public void onClick(View view) {
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        colors.setOnClickListener (new View.OnClickListener() {
+        colors.setOnClickListener(new View.OnClickListener() {
             // The code in this method will be executed when the colors View is clicked on.
             @Override
             public void onClick(View view) {
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        phrases.setOnClickListener (new View.OnClickListener() {
+        phrases.setOnClickListener(new View.OnClickListener() {
             // The code in this method will be executed when the phrases View is clicked on.
             @Override
             public void onClick(View view) {
