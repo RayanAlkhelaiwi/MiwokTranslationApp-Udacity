@@ -16,9 +16,11 @@ import java.util.ArrayList;
 
 public class WordAdapter extends ArrayAdapter<Word> {
 
+    private int mBackgroundColor;
 
-    public WordAdapter(Context context, ArrayList<Word> wordsArrayList) {
+    public WordAdapter(Context context, ArrayList<Word> wordsArrayList, int backgroundColor) {
         super(context, 0, wordsArrayList);
+        mBackgroundColor = backgroundColor;
     }
 
     @Override
@@ -33,6 +35,9 @@ public class WordAdapter extends ArrayAdapter<Word> {
 
         Word currentWord = getItem(position);
 
+        View linearLayout = listItemView.findViewById(R.id.text_layout);
+        linearLayout.setBackgroundResource(mBackgroundColor);
+
         TextView defaultTranslation = (TextView) listItemView.findViewById(R.id.default_text);
         defaultTranslation.setText(currentWord.getmDefaultTranslation());
 
@@ -40,7 +45,15 @@ public class WordAdapter extends ArrayAdapter<Word> {
         miwokTranslation.setText(currentWord.getMiwokTranslation());
 
         ImageView listImage = (ImageView) listItemView.findViewById(R.id.list_image);
-        listImage.setImageResource(currentWord.getListImage());
+
+        if (currentWord.hasImage()) {
+            listImage.setImageResource(currentWord.getListImage());
+
+            listImage.setVisibility(View.VISIBLE);
+        } else {
+
+            listImage.setVisibility(View.GONE);
+        }
 
         return listItemView;
     }
