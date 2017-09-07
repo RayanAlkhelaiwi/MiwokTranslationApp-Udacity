@@ -51,7 +51,6 @@ public class WordAdapter extends ArrayAdapter<Word> {
 
             listImage.setVisibility(View.VISIBLE);
         } else {
-
             listImage.setVisibility(View.GONE);
         }
 
