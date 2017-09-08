@@ -1,17 +1,23 @@
 package com.example.android.miwok;
 
+
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class FamilyMembersActivity extends AppCompatActivity {
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class FamilyMembersFragment extends Fragment {
 
     private MediaPlayer mediaPlayer;
     private AudioManager audioManager;
@@ -38,12 +44,18 @@ public class FamilyMembersActivity extends AppCompatActivity {
         }
     };
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.word_list);
+    public FamilyMembersFragment() {
+        // Required empty public constructor
+    }
 
-        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.word_list, container, false);
+
+        /** TODO: Insert all the code from the NumberActivity’s onCreate() method after the setContentView method call */
+        audioManager = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
 
         final ArrayList<Word> words = new ArrayList<>();
 
@@ -58,9 +70,9 @@ public class FamilyMembersActivity extends AppCompatActivity {
         words.add(new Word("Grandmother", "ama", R.drawable.family_grandmother, R.raw.family_grandmother));
         words.add(new Word("Grandfather", "paapa", R.drawable.family_grandfather, R.raw.family_grandfather));
 
-        WordAdapter itemsAdapter = new WordAdapter(this, words, R.color.category_family);
+        WordAdapter itemsAdapter = new WordAdapter(getActivity(), words, R.color.category_family);
 
-        ListView listView = (ListView) findViewById(R.id.list);
+        ListView listView = (ListView) rootView.findViewById(R.id.list);
         listView.setAdapter(itemsAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -82,7 +94,7 @@ public class FamilyMembersActivity extends AppCompatActivity {
                 if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
                     //Audio Focus is granted.
 
-                    mediaPlayer = MediaPlayer.create(FamilyMembersActivity.this, word.getListAudio());
+                    mediaPlayer = MediaPlayer.create(getActivity(), word.getListAudio());
                     mediaPlayer.start();
 
                     mediaPlayer.setOnCompletionListener(onCompletionListener);
@@ -90,6 +102,8 @@ public class FamilyMembersActivity extends AppCompatActivity {
             }
 
         });
+
+        return rootView;
     }
 
     public void releaseMediaPlayer() {
@@ -102,7 +116,7 @@ public class FamilyMembersActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop() {
+    public void onStop() {
         super.onStop();
         releaseMediaPlayer();
     }

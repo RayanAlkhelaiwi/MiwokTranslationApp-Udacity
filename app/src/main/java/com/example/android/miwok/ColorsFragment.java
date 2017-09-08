@@ -1,20 +1,27 @@
 package com.example.android.miwok;
 
+
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class NumbersActivity extends AppCompatActivity {
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class ColorsFragment extends Fragment {
 
     private MediaPlayer mediaPlayer;
     private AudioManager audioManager;
+
 
     private AudioManager.OnAudioFocusChangeListener onAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
         @Override
@@ -38,29 +45,33 @@ public class NumbersActivity extends AppCompatActivity {
         }
     };
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.word_list);
+    public ColorsFragment() {
+        // Required empty public constructor
+    }
 
-        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.word_list, container, false);
+
+        /** TODO: Insert all the code from the NumberActivity’s onCreate() method after the setContentView method call */
+        audioManager = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
 
         final ArrayList<Word> words = new ArrayList<>();
 
-        words.add(new Word("One", "lutti", R.drawable.number_one, R.raw.number_one));
-        words.add(new Word("Two", "otiiko", R.drawable.number_two, R.raw.number_two));
-        words.add(new Word("Three", "tolookosu", R.drawable.number_three, R.raw.number_three));
-        words.add(new Word("Four", "oyyisa", R.drawable.number_four, R.raw.number_four));
-        words.add(new Word("Five", "massokka", R.drawable.number_five, R.raw.number_five));
-        words.add(new Word("Six", "temmokka", R.drawable.number_six, R.raw.number_six));
-        words.add(new Word("Seven", "kenekaku", R.drawable.number_seven, R.raw.number_seven));
-        words.add(new Word("Eight", "kawinta", R.drawable.number_eight, R.raw.number_eight));
-        words.add(new Word("Nine", "wo’e", R.drawable.number_nine, R.raw.number_nine));
-        words.add(new Word("Ten", "na’aacha", R.drawable.number_ten, R.raw.number_ten));
+        words.add(new Word("Red", "weṭeṭṭi", R.drawable.color_red, R.raw.color_red));
+        words.add(new Word("Green", "chokokki", R.drawable.color_green, R.raw.color_green));
+        words.add(new Word("Brown", "ṭakaakki", R.drawable.color_brown, R.raw.color_brown));
+        words.add(new Word("Gray", "ṭopoppi", R.drawable.color_gray, R.raw.color_gray));
+        words.add(new Word("Black", "kululli", R.drawable.color_black, R.raw.color_black));
+        words.add(new Word("White", "kelelli", R.drawable.color_white, R.raw.color_white));
+        words.add(new Word("Dusty Yellow", "ṭopiisә", R.drawable.color_dusty_yellow, R.raw.color_dusty_yellow));
+        words.add(new Word("Mustard Yellow", "chiwiiṭә", R.drawable.color_mustard_yellow, R.raw.color_mustard_yellow));
 
-        WordAdapter itemsAdapter = new WordAdapter(this, words, R.color.category_numbers);
+        WordAdapter itemsAdapter = new WordAdapter(getActivity(), words, R.color.category_colors);
 
-        ListView listView = (ListView) findViewById(R.id.list);
+        ListView listView = (ListView) rootView.findViewById(R.id.list);
         listView.setAdapter(itemsAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -81,13 +92,15 @@ public class NumbersActivity extends AppCompatActivity {
                 if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
                     //Audio Focus is granted.
 
-                    mediaPlayer = MediaPlayer.create(NumbersActivity.this, word.getListAudio());
+                    mediaPlayer = MediaPlayer.create(getActivity(), word.getListAudio());
                     mediaPlayer.start();
 
                     mediaPlayer.setOnCompletionListener(onCompletionListener);
                 }
             }
         });
+
+        return rootView;
     }
 
     public void releaseMediaPlayer() {
@@ -100,7 +113,7 @@ public class NumbersActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop() {
+    public void onStop() {
         super.onStop();
         releaseMediaPlayer();
     }
