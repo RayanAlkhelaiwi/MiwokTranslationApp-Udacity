@@ -82,7 +82,7 @@ public class PhrasesFragment extends Fragment {
 
                 releaseMediaPlayer();
 
-                // Request audio focus for playback
+                // Request audio focus for playback.
                 int result = audioManager.requestAudioFocus(onAudioFocusChangeListener,
                         // Use the music stream.
                         AudioManager.STREAM_MUSIC,
